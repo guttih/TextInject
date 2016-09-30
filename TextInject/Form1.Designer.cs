@@ -41,12 +41,12 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.rtbText = new System.Windows.Forms.RichTextBox();
 			this.splitContainer6 = new System.Windows.Forms.SplitContainer();
-			this.cboFileEncoding = new System.Windows.Forms.ComboBox();
+			this.comboFileEncoding = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.rtbSelectedFile = new System.Windows.Forms.RichTextBox();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.bInject = new System.Windows.Forms.Button();
-			this.cboAncor = new System.Windows.Forms.ComboBox();
+			this.comboAncor = new System.Windows.Forms.ComboBox();
 			this.numOffset = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblFolder = new System.Windows.Forms.Label();
@@ -218,7 +218,7 @@
 			this.splitContainer5.Panel1.AutoScroll = true;
 			this.splitContainer5.Panel1.Controls.Add(this.label4);
 			this.splitContainer5.Panel1.Controls.Add(this.numOffset);
-			this.splitContainer5.Panel1.Controls.Add(this.cboAncor);
+			this.splitContainer5.Panel1.Controls.Add(this.comboAncor);
 			this.splitContainer5.Panel1.Controls.Add(this.bInject);
 			this.splitContainer5.Panel1.Controls.Add(this.label2);
 			this.splitContainer5.Panel1MinSize = 10;
@@ -262,7 +262,7 @@
 			// 
 			this.splitContainer6.Panel1.AutoScroll = true;
 			this.splitContainer6.Panel1.AutoScrollMargin = new System.Drawing.Size(2, 2);
-			this.splitContainer6.Panel1.Controls.Add(this.cboFileEncoding);
+			this.splitContainer6.Panel1.Controls.Add(this.comboFileEncoding);
 			this.splitContainer6.Panel1.Controls.Add(this.label3);
 			this.splitContainer6.Panel1MinSize = 10;
 			// 
@@ -274,19 +274,19 @@
 			this.splitContainer6.SplitterDistance = 25;
 			this.splitContainer6.TabIndex = 0;
 			// 
-			// cboFileEncoding
+			// comboFileEncoding
 			// 
-			this.cboFileEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboFileEncoding.FormattingEnabled = true;
-			this.cboFileEncoding.Items.AddRange(new object[] {
+			this.comboFileEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboFileEncoding.FormattingEnabled = true;
+			this.comboFileEncoding.Items.AddRange(new object[] {
             "Default",
             "UTF-8",
             "ISO-8859-1"});
-			this.cboFileEncoding.Location = new System.Drawing.Point(170, 2);
-			this.cboFileEncoding.Name = "cboFileEncoding";
-			this.cboFileEncoding.Size = new System.Drawing.Size(121, 28);
-			this.cboFileEncoding.TabIndex = 1;
-			this.cboFileEncoding.SelectedIndexChanged += new System.EventHandler(this.cboFileEncoding_SelectedIndexChanged);
+			this.comboFileEncoding.Location = new System.Drawing.Point(170, 2);
+			this.comboFileEncoding.Name = "comboFileEncoding";
+			this.comboFileEncoding.Size = new System.Drawing.Size(121, 28);
+			this.comboFileEncoding.TabIndex = 1;
+			this.comboFileEncoding.SelectedIndexChanged += new System.EventHandler(this.cboFileEncoding_SelectedIndexChanged);
 			// 
 			// label3
 			// 
@@ -321,17 +321,17 @@
 			this.bInject.UseVisualStyleBackColor = true;
 			this.bInject.Click += new System.EventHandler(this.bInject_Click);
 			// 
-			// cboAncor
+			// comboAncor
 			// 
-			this.cboAncor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboAncor.FormattingEnabled = true;
-			this.cboAncor.Items.AddRange(new object[] {
+			this.comboAncor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboAncor.FormattingEnabled = true;
+			this.comboAncor.Items.AddRange(new object[] {
             "Top",
             "Bottom"});
-			this.cboAncor.Location = new System.Drawing.Point(280, 6);
-			this.cboAncor.Name = "cboAncor";
-			this.cboAncor.Size = new System.Drawing.Size(85, 28);
-			this.cboAncor.TabIndex = 2;
+			this.comboAncor.Location = new System.Drawing.Point(280, 6);
+			this.comboAncor.Name = "comboAncor";
+			this.comboAncor.Size = new System.Drawing.Size(85, 28);
+			this.comboAncor.TabIndex = 2;
 			// 
 			// numOffset
 			// 
@@ -418,11 +418,11 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.RichTextBox rtbSelectedFile;
 		private System.Windows.Forms.Button btnRead;
-		private System.Windows.Forms.ComboBox cboFileEncoding;
+		private System.Windows.Forms.ComboBox comboFileEncoding;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox tbSearch;
 		private System.Windows.Forms.Button bInject;
-		private System.Windows.Forms.ComboBox cboAncor;
+		private System.Windows.Forms.ComboBox comboAncor;
 		private System.Windows.Forms.NumericUpDown numOffset;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label lblFolder;

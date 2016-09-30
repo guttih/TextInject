@@ -79,14 +79,14 @@ namespace TextInject
 			{
 				StreamReader reader;
 				string str;
-				if (cboFileEncoding.SelectedIndex == 0)
+				if (comboFileEncoding.SelectedIndex == 0)
 				{
 					reader = new StreamReader(fullFileame);
 
 				}
 				else
 				{
-					var enc = cboFileEncoding.SelectedIndex == 1 ? Encoding.UTF8 : Encoding.GetEncoding("ISO-8859-1");
+					var enc = comboFileEncoding.SelectedIndex == 1 ? Encoding.UTF8 : Encoding.GetEncoding("ISO-8859-1");
 					reader = new StreamReader(fullFileame, enc, false);
 				}
 
@@ -117,6 +117,7 @@ namespace TextInject
 
 		}
 
+		
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			TreeNode CurrentNode = e.Node;
@@ -133,8 +134,9 @@ namespace TextInject
 		{
 			timer1.Enabled = true;
 			rtbSelectedFile.Font = new Font(FontFamily.GenericMonospace, rtbSelectedFile.Font.Size);
-			cboFileEncoding.SelectedIndex = 0;
-			cboAncor.SelectedIndex = 0;
+			comboFileEncoding.SelectedIndex = 0;
+			comboAncor.SelectedIndex = 0;
+			comboAncor.SelectedIndex = 1; //bottom
 			treeView1.Scrollable = true;
 		}
 
@@ -153,14 +155,14 @@ namespace TextInject
 
 			try
 			{
+				//search current directory
+				foreach (string f in Directory.GetFiles(sDir, searchCriteria))
+				{
+					files.Add(f);
+
+				}
 				foreach (string d in Directory.GetDirectories(sDir))
 				{
-					//todo: allow user to make criteria
-					foreach (string f in Directory.GetFiles(d, searchCriteria))
-					{
-						files.Add(f);
-
-					}
 					DirSearch(d, files, searchCriteria);
 				}
 			}
@@ -290,22 +292,180 @@ namespace TextInject
 				readFileToTextBox(currentNode.FullPath);
 			}
 		}
+		
+		public void GetCheckedNodes(TreeNodeCollection nodes, List<string> list)
+		{
+			foreach (System.Windows.Forms.TreeNode aNode in nodes)
+			{
+				//edit
+				string path;
+				if (aNode.Checked)
+				{
+					path = aNode.FullPath;
+					if (File.Exists(path))
+						list.Add(path);
+				}
+
+				if (aNode.Nodes.Count != 0)
+					GetCheckedNodes(aNode.Nodes, list);
+			}
+		}
+
+		private Boolean AppendToFile(string fullFileName, string stringToAppend)
+		{
+			
+			if (stringToAppend.Length < 1)
+			{
+				return false;//this should not happen, but to be safe.
+			}
+
+			if (comboFileEncoding.SelectedIndex == 2)
+			{
+				stringToAppend = UTF8_to_ISO_8859_1(stringToAppend);
+				File.AppendAllText(fullFileName, stringToAppend, Encoding.GetEncoding("ISO-8859-1"));
+			}
+			else
+			{
+				File.AppendAllText(fullFileName, stringToAppend);
+			}
+
+			return true;
+		}
+
+
+		private bool AddToFile(string fullFileName, bool fromBottom, int inOffset, string stringToAdd)
+		{
+			int insertIndex;
+
+			if (inOffset < 0 || stringToAdd.Length < 1)
+			{
+				return false;
+			}
+			var lineCount = File.ReadLines(fullFileName).Count();
+			StreamReader reader;
+			if (comboFileEncoding.SelectedIndex == 2)
+			{
+				stringToAdd = UTF8_to_ISO_8859_1(stringToAdd);
+				reader = new StreamReader(	fullFileName,
+											Encoding.GetEncoding("ISO-8859-1"),
+											false
+										 );
+			}
+			else
+			{
+				reader = new StreamReader(fullFileName);
+			}
+
+			
+			if (fromBottom)
+			{   //from the bottom
+				insertIndex = lineCount - inOffset;
+				if (insertIndex < 0)
+				{   
+					insertIndex = 0;
+				}
+			}
+			else
+			{   //from the top
+				insertIndex = inOffset +1 ;
+				if (insertIndex == lineCount)
+				{
+					insertIndex++;//to trigger AppendToIsoFile metod
+				}
+			}
+
+			if (insertIndex > lineCount)
+			{
+				//  there are no comments in this file so we will or the insertIndex is higer than the number of lines in the file (out of bounds)
+				//  We will ignore all indexing and just append comments to the file
+				reader.Close();
+				return AppendToFile(fullFileName, stringToAdd);
+			}
+
+
+			StreamWriter writer;
+			// Let's add the comment at a specific location
+			if (comboFileEncoding.SelectedIndex == 2)
+			{
+				writer = new StreamWriter(	fullFileName + ".temp",
+											false,
+											Encoding.GetEncoding("ISO-8859-1")
+										 );
+			}
+			else
+			{
+				writer = new StreamWriter(fullFileName + ".temp");
+			}
+
+			string line;
+			int counter = 0;
+			reader.DiscardBufferedData();
+			reader.BaseStream.Seek(0, SeekOrigin.Begin);
+			while ((line = reader.ReadLine()) != null)
+			{
+				counter++;
+
+				if (counter == insertIndex)
+				{
+					writer.Write(stringToAdd);
+				}
+				writer.Write(line + "\n");
+
+
+			}
+
+			reader.Close();
+			writer.Close();
+			File.Delete(fullFileName);
+			File.Move(fullFileName + ".temp", fullFileName);
+
+			return true;
+		}
 
 		private void inject()
-		{/*
-			string textToAdd = tb
-			string[] files = _files.GetFullFileNames();
+		{
+			List<string> checkedFiles = new List<string>();
+			GetCheckedNodes(treeView1.Nodes, checkedFiles);
+			string[] files = checkedFiles.ToArray();
+			string textToAdd = rtbText.Text;
 			int indexComboAncor = comboAncor.SelectedIndex;
-			int indexComboOffset = comboOffset.SelectedIndex;
+			int indexComboOffset;
+
 			int modifedFiles = 0;
-			if (files != null)
+			if (files.Length < 1)
 			{
+				MessageBox.Show("No files selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if (textToAdd.Length < 1)
+			{
+				MessageBox.Show("No text to inject", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			
+
+			try
+			{
+				indexComboOffset = Convert.ToInt32(Math.Round(numOffset.Value, 0));
+			}
+			catch (Exception)
+			{
+				MessageBox.Show("Line offset has an invalid value!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (indexComboOffset < 0)
+			{
+				MessageBox.Show("Line offset cannot be less that zero", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return; //tyo
+			}
+
 				foreach (string file in files)
 				{
 					if (indexComboAncor == 1 && indexComboOffset == 0)
 					{
 						//user selected "bottom" and "0"
-						if (AppendToIsoFile(file, textToAdd))
+						if (AppendToFile(file, textToAdd))
 							modifedFiles++;
 					}
 					else
@@ -315,7 +475,7 @@ namespace TextInject
 							modifedFiles++;
 					}
 				}
-			}
+
 			if (modifedFiles == 0)
 				MessageBox.Show("No files were modified!", "No files modified", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			else
@@ -325,30 +485,29 @@ namespace TextInject
 					str = "There were " + modifedFiles.ToString() + " files modified.";
 				MessageBox.Show(str, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
-			*/
-
-
 		}
+
+
 		private void bInject_Click(object sender, EventArgs e)
 		{//\n\n
-			int index = cboFileEncoding.SelectedIndex;
-			string strEncoding = cboFileEncoding.Items[index].ToString();
+			int index = comboFileEncoding.SelectedIndex;
+			string strEncoding = comboFileEncoding.Items[index].ToString();
 			string strMessage;
 			if (index == 0)
 			{
-				strMessage	= "Selected files will be opened\n"
+				strMessage	= "Checked files will be opened\n"
 							+ "and the text you typed will be injected to them.";
 			}
 			else
 			{
-				strMessage	= "Selected files will be opened with the encoding \"" + strEncoding + "\" \n" 
+				strMessage	= "Checked files will be opened with the encoding \"" + strEncoding + "\" \n" 
 							+ "and the text you typed will be converted to that format and injected to them.";
 			}
 
 			strMessage += "\n\nDo you want to start the injection of these files?";
 			var dialogResult = MessageBox.Show(
 				strMessage,
-				"Starting injection on selected files", MessageBoxButtons.YesNo);
+				"Starting injection to checked files", MessageBoxButtons.YesNo);
 			if (dialogResult == DialogResult.Yes)
 			{
 				inject();
