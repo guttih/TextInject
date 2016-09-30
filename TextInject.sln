@@ -9,6 +9,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Description = A windows application to inject text into textfiles
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{89915A82-5F60-453A-A656-704BC2083892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

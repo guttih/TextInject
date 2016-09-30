@@ -50,7 +50,12 @@
 			this.numOffset = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblFolder = new System.Windows.Forms.Label();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.browseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -74,6 +79,7 @@
 			this.splitContainer6.Panel2.SuspendLayout();
 			this.splitContainer6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numOffset)).BeginInit();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -83,6 +89,10 @@
 			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer1.Name = "splitContainer1";
 			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.menuStrip1);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -363,15 +373,55 @@
 			this.lblFolder.TabIndex = 0;
 			this.lblFolder.Text = "                ";
 			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(1026, -1);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(178, 33);
+			this.menuStrip1.TabIndex = 0;
+			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem1,
+            this.browseToolStripMenuItem});
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(32, 29);
+			this.aboutToolStripMenuItem.Text = "?";
+			// 
+			// aboutToolStripMenuItem1
+			// 
+			this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+			this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(211, 30);
+			this.aboutToolStripMenuItem1.Text = "About";
+			this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
+			// 
+			// browseToolStripMenuItem
+			// 
+			this.browseToolStripMenuItem.Name = "browseToolStripMenuItem";
+			this.browseToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+			this.browseToolStripMenuItem.Text = "Browse";
+			this.browseToolStripMenuItem.Click += new System.EventHandler(this.browseToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1204, 628);
 			this.Controls.Add(this.splitContainer1);
+			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "Text inject";
 			this.Load += new System.EventHandler(this.Form1_Load);
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel1.PerformLayout();
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
@@ -399,6 +449,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
 			this.splitContainer6.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.numOffset)).EndInit();
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -426,6 +478,10 @@
 		private System.Windows.Forms.NumericUpDown numOffset;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label lblFolder;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem browseToolStripMenuItem;
 	}
 }
 

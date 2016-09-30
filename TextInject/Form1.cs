@@ -518,5 +518,34 @@ namespace TextInject
 				MessageBox.Show("°No", "User selected ", MessageBoxButtons.OK);
 			}
 		}
+
+		private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+			
+		}
+
+		private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			About aboutWindow = new About();
+			aboutWindow.Show();
+		}
+
+		private void browseToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// var attr = File.GetAttributes(folders[0]);
+			// if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+			
+
+			FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+			DialogResult result = fbd.ShowDialog();
+
+			var attr = File.GetAttributes(fbd.SelectedPath);
+			if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+			{
+				lblFolder.Text = fbd.SelectedPath;
+				updateTreeView(true);
+			}
+		}
 	}
 }

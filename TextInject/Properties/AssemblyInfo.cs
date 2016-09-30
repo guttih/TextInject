@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TextInject")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A windows application used to inject text into textfiles.\r\n\r\nI hope you can use it.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Guðjón Hólm Sigurðsson")]
 [assembly: AssemblyProduct("TextInject")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
