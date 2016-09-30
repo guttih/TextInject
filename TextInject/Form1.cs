@@ -550,5 +550,10 @@ namespace TextInject
 			}
 
 		}
+
+		private void productPageToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			System.Diagnostics.Process.Start("http://www.github.com/guttih/TextInject");
+		}
 	}
 }
