@@ -513,10 +513,7 @@ namespace TextInject
 				inject();
 				
 			}
-			else
-			{
-				MessageBox.Show("°No", "User selected ", MessageBoxButtons.OK);
-			}
+			
 		}
 
 		private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -537,15 +534,21 @@ namespace TextInject
 			
 
 			FolderBrowserDialog fbd = new FolderBrowserDialog();
-
+			fbd.Description = "Please select the document folder";
 			DialogResult result = fbd.ShowDialog();
-
-			var attr = File.GetAttributes(fbd.SelectedPath);
-			if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-			{
-				lblFolder.Text = fbd.SelectedPath;
-				updateTreeView(true);
+			try { 
+				var attr = File.GetAttributes(fbd.SelectedPath);
+				if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+				{
+					lblFolder.Text = fbd.SelectedPath;
+					updateTreeView(true);
+				}
 			}
+			catch (System.Exception excpt)
+			{
+				return; // nada
+			}
+
 		}
 	}
 }
